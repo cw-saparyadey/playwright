@@ -12,6 +12,7 @@ test.describe('Hyundai Venue Tests', () => {
         await venue.validatePrice();
         await venue.imagesdisplay();
         await venue.clickOnRoadPrice();
+        await venue.validateOnRoadNavigation();
         await venue.validatesearch();
         await venue.validateFuel();
 
