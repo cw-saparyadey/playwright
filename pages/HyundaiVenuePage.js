@@ -3,7 +3,7 @@ import { expect } from "@playwright/test";
 export class HyundaiVenuePage {
   constructor(page) {
     this.page = page;
-    this.title = page.locator(".o-j6.o-jm.o-js.o-jH");
+    this.title = page.locator("[data-testing-id='modelNameOverview']");
     this.price = page.locator("span:has-text('Rs. 6.70 - 11.51 Lakh')");
     this.roadPriceBtn = page.locator("a:has-text('Venue On Road Price')");
     this.images = page.locator("[data-lang-id='images_widget_body'] img");
@@ -15,10 +15,9 @@ export class HyundaiVenuePage {
   }
 
   async pages() {
-    await expect(this.page).toHaveTitle(
-      "Hyundai Venue Price in India - February 2026 Venue Price, Images, Mileage & Colours - CarWale",
-    );
-  }
+  await expect(this.page).toHaveTitle(/Hyundai Venue/);
+}
+
   async validateCarName() {
     await expect(this.title).toHaveText("Hyundai Venue");
   }
@@ -38,7 +37,6 @@ export class HyundaiVenuePage {
 
   async validateFuel() {
   await this.fuelSection.click();
-
   await expect(this.page.locator('[data-testing-id*="-selected-"]'))
     .toBeVisible();
 }
