@@ -8,12 +8,8 @@ export class HyundaiVenuePage {
     this.roadPriceBtn = page.locator("a:has-text('Venue On Road Price')");
     this.images = page.locator("[data-lang-id='images_widget_body'] img");
     this.search = page.getByPlaceholder("Search", { exact: true });
-    this.fuelSection = page
-      .locator("span")
-      .filter({ hasText: "Petrol" })
-      .first();
+    this.fuelSection = page.locator("[data-testing-id='fuel-type-tick-0-checkbox-label']");
   }
-
   async navigate() {
     await this.page.goto("https://stg.carwale.com/hyundai-cars/venue/");
   }
@@ -34,20 +30,24 @@ export class HyundaiVenuePage {
   async imagesdisplay() {
     await expect(this.images.nth(2)).toBeVisible({ timeout: 10000 });
   }
-  async clickOnRoadPrice() {
-    await this.roadPriceBtn.click();
-  }
-  async validateOnRoadNavigation() {
-  await expect(this.page.url()).toContain("price-in");;
-}
-
+ 
   async validatesearch() {
     await this.search.fill("Hyundai Creta");
     await expect(this.search).toHaveValue("Hyundai Creta");
   }               
 
   async validateFuel() {
-    await this.fuelSection.click();
-    
+  await this.fuelSection.click();
+
+  await expect(this.page.locator('[data-testing-id*="-selected-"]'))
+    .toBeVisible();
+}
+ async clickOnRoadPrice() {
+    await this.roadPriceBtn.click();
   }
+  async validateOnRoadNavigation() {
+  await expect(this.page).toHaveURL(/price-in/);
+}
+
+
 }
